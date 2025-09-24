@@ -77,7 +77,7 @@ level: 1
 
 # 第一章：搜索过程概览
 
-## 🔍 搜索系统整体架构
+## 搜索系统整体架构
 
 <div v-click class="text-center my-8">
 
@@ -127,7 +127,7 @@ level: 2
 
 <div>
 
-## 📝 主要功能
+## 主要功能
 
 <v-clicks>
 
@@ -141,7 +141,7 @@ level: 2
 
 <div>
 
-## 💡 处理示例
+## 处理示例
 
 <v-click>
 
@@ -188,7 +188,7 @@ level: 2
 
 <div v-click>
 
-## 🧠 命名实体识别
+## 命名实体识别
 识别品牌、类目、属性、标签等实体
 
 ```typescript
@@ -203,7 +203,7 @@ output: {
 
 <div v-click>
 
-## 🎯 精准匹配
+## 精准匹配
 直接匹配系统中已有的品牌和类目
 
 ```typescript
@@ -215,7 +215,7 @@ output: { brandId: "huawei", confidence: 1.0 }
 
 <div v-click>
 
-## 📚 同义词扩展
+## 同义词扩展
 使用同义词库扩展未直接匹配的类目
 
 ```typescript
@@ -227,7 +227,7 @@ expanded: ["笔记本电脑", "便携式电脑", "laptop"]
 
 <div v-click>
 
-## 🔍 向量搜索扩展
+## 向量搜索扩展
 基于语义向量进行品牌和类目扩展
 
 ```typescript
@@ -254,7 +254,7 @@ level: 2
 
 <div>
 
-## 📊 多因子联合评分
+## 多因子联合评分
 
 <v-clicks>
 
@@ -277,7 +277,7 @@ level: 2
 
 <div>
 
-## 🎯 ES粗排召回
+## ES粗排召回
 
 <v-click>
 
@@ -313,7 +313,7 @@ level: 2
 
 # 1.4 精排阶段
 
-## 🚀 业务模型精排
+## 业务模型精排
 
 <div v-click class="my-6">
 
@@ -337,7 +337,7 @@ ES评分: 17.5
 品牌加权: 2.0
 语义增强: 3.2
 ━━━━━━━━━━━━
-优先级排序 ⭐
+优先级排序
 ```
 
 **商品B**  
@@ -374,7 +374,7 @@ level: 2
 layout: center
 ---
 
-# 💡 完整搜索示例流程
+# 完整搜索示例流程
 
 <div class="text-left">
 
@@ -408,7 +408,7 @@ level: 1
 
 # 第二章：搜索评分体系
 
-## 🎯 评分体系架构
+## 评分体系架构
 
 <div v-click class="my-8 p-4 bg-gray-100 rounded-lg">
 
@@ -422,7 +422,7 @@ level: 1
 
 <div v-click>
 
-### 🔍 核心算法
+### 核心算法
 - **BM25基础评分**: TF-IDF改进版
 - **语义增强评分**: 实体匹配加权
 - **商品质量评分**: 销售数据评估
@@ -432,7 +432,7 @@ level: 1
 
 <div v-click>
 
-### ⚡ 性能优化
+### 性能优化
 - **归一化处理**: 对数缩放避免长尾
 - **权重配置**: 动态调整评分比例
 - **缓存机制**: 减少重复计算
@@ -456,7 +456,7 @@ level: 2
 
 <div>
 
-## 📐 算法原理
+## 算法原理
 
 <v-click>
 
@@ -481,7 +481,7 @@ return total * weight;
 
 <div>
 
-## 🎯 评分特点
+## 评分特点
 
 <v-clicks>
 
@@ -520,7 +520,7 @@ level: 2
 
 <div v-click>
 
-## ⚖️ 权重分布
+## 权重分布
 
 ```typescript
 brand_weight: 2.0      // 品牌匹配权重 - 最高优先级
@@ -532,7 +532,7 @@ spec_weight: 1.0       // 规格匹配权重 - 基础优先级
 
 <div v-click>
 
-## 🧮 计算公式
+## 计算公式
 
 ```javascript
 total = brand_score * brand_weight + 
@@ -544,7 +544,7 @@ total = brand_score * brand_weight +
 
 <div v-click class="text-center mt-8">
 
-### 🎯 核心思想
+### 核心思想
 **通过实体匹配为搜索结果提供语义相关性评分**
 
 不同类型的匹配具有不同的权重，品牌匹配获得最高权重
@@ -567,7 +567,7 @@ level: 2
 
 <div v-click>
 
-## 💡 计算示例：查询"苹果手机"
+## 计算示例：查询"苹果手机"
 
 <div class="grid grid-cols-2 gap-8">
 
@@ -618,7 +618,7 @@ total = 1.0×2.0 + 1.0×1.5 + 0.0×1.5 = 3.5
 
 <div v-click class="mt-8 text-center p-4 bg-blue-50 rounded-lg">
 
-🎯 **语义增强效果**: 相关商品获得更高评分，提升搜索精准度
+**语义增强效果**: 相关商品获得更高评分，提升搜索精准度
 
 </div>
 
@@ -634,7 +634,7 @@ level: 2
 
 <div>
 
-## 📈 销售数据权重分布
+## 销售数据权重分布
 
 <v-click>
 
@@ -648,7 +648,7 @@ level: 2
 
 <v-click>
 
-## 🧮 计算公式
+## 计算公式
 
 ```typescript
 skuScore = (sku30 * 0.6) + 
@@ -662,7 +662,7 @@ skuScore = (sku30 * 0.6) +
 
 <div>
 
-## 🎯 归一化处理
+## 归一化处理
 
 <v-click>
 
@@ -680,7 +680,7 @@ normalizedScore =
 
 <v-click>
 
-## 📊 实际示例
+## 实际示例
 
 ```
 原始销量: 10000件
@@ -707,7 +707,7 @@ level: 2
 
 <div>
 
-## 🏪 品牌提升评分 (OriginalBrandBoost)
+## 品牌提升评分 (OriginalBrandBoost)
 
 <v-click>
 
@@ -720,7 +720,7 @@ level: 2
 
 <v-click>
 
-## ⭐ 供应商星级评分 (VenderStarLevel)
+## 供应商星级评分 (VenderStarLevel)
 
 - 1-5星评级: 直接使用星级作为权重
 - 优质标签: "premium"标签额外加权
@@ -731,7 +731,7 @@ level: 2
 
 <div>
 
-## ⚖️ 业务权重评分 (BusinessWeight)
+## 业务权重评分 (BusinessWeight)
 
 <v-click>
 
@@ -776,13 +776,13 @@ level: 1
 
 # 第三章：搜索粗排和精排
 
-## ⚡ 两阶段排序架构
+## 两阶段排序架构
 
 <div class="grid grid-cols-2 gap-8 mt-8">
 
 <div v-click>
 
-### 🔍 粗排阶段 (Elasticsearch层面)
+### 粗排阶段 (Elasticsearch层面)
 - **Function Score查询**: 多维度评分合并
 - **动态缓存扩展**: 基于缓存状态动态召回
 - **SPU/SKU处理**: 去重聚合与属性统计
@@ -792,7 +792,7 @@ level: 1
 
 <div v-click>
 
-### 🎯 精排阶段 (应用层面)  
+### 精排阶段 (应用层面)  
 - **排序器架构**: 多级排序组合
 - **排序顺序配置**: 可配置优先级
 - **分组排序策略**: 货架式排列
@@ -831,7 +831,7 @@ level: 2
 
 <div v-click>
 
-## 🔧 Function Score查询结构
+## Function Score查询结构
 
 ````md magic-move {lines: true}
 ```typescript {*|3|5-8|9-10}
@@ -864,7 +864,7 @@ level: 2
 
 <div v-click>
 
-## 📊 召回窗口策略
+## 召回窗口策略
 
 - **动态缓存扩展**: 基于当前缓存状态和分页需求动态扩展
 - **缓存命中**: 直接使用缓存，无需额外查询
@@ -890,7 +890,7 @@ level: 2
 
 <div>
 
-## 📦 SPU模式
+## SPU模式
 
 <v-click>
 
@@ -923,7 +923,7 @@ aggs: {
 
 <div>
 
-## 🏷️ SKU模式
+## SKU模式
 
 <v-click>
 
@@ -979,7 +979,7 @@ level: 2
 
 <div v-click>
 
-## 🎯 排序器映射表
+## 排序器映射表
 
 ```typescript
 const sorterMap = {
@@ -1028,7 +1028,7 @@ level: 2
 
 <div>
 
-## 🔄 多级排序逻辑
+## 多级排序逻辑
 
 <v-click>
 
@@ -1053,7 +1053,7 @@ function sorter(sortType, products, sorterOrder) {
 
 <div>
 
-## 📚 分组排序策略
+## 分组排序策略
 
 <v-click>
 
@@ -1097,13 +1097,13 @@ level: 1
 
 # 第四章：搜索设置解释及调整方法
 
-## ⚙️ 参数调优体系
+## ⚙参数调优体系
 
 <div class="grid grid-cols-3 gap-6 mt-8">
 
 <div v-click>
 
-### 🔧 权重配置
+### 权重配置
 - 语义增强权重
 - 脚本评分权重  
 - 业务权重设置
@@ -1113,7 +1113,7 @@ level: 1
 
 <div v-click>
 
-### 📐 归一化参数
+### 归一化参数
 - 对数缩放配置
 - xmax/k参数调整
 - 分数分布优化
@@ -1123,7 +1123,7 @@ level: 1
 
 <div v-click>
 
-### ⚡ 性能优化
+### 性能优化
 - 召回窗口配置
 - 缓存策略设置
 - 分页优化参数
@@ -1135,7 +1135,7 @@ level: 1
 
 <div v-click class="mt-8 text-center p-4 bg-blue-50 rounded-lg">
 
-💡 **调优原则**: 先理解业务目标 → 分析数据分布 → 小步调整验证 → 持续监控优化
+**调优原则**: 先理解业务目标 → 分析数据分布 → 小步调整验证 → 持续监控优化
 
 </div>
 
@@ -1153,7 +1153,7 @@ level: 2
 
 <div>
 
-## ⚖️ 语义增强权重
+## 语义增强权重
 
 <v-click>
 
@@ -1178,7 +1178,7 @@ resultWeight: 5.0       // 语义增强总权重
 
 <div>
 
-## 🎯 其他脚本权重
+## 其他脚本权重
 
 <v-click>
 
@@ -1216,7 +1216,7 @@ level: 2
 
 <div v-click>
 
-## 📐 对数缩放配置
+## 对数缩放配置
 
 ```typescript
 // 各评分组件的归一化参数
@@ -1229,7 +1229,7 @@ productQualityScore:    { xmax: 1000, k: 100 } // 商品质量归一化
 
 <div v-click>
 
-## 🧮 参数说明与公式
+## 参数说明与公式
 
 <div class="grid grid-cols-2 gap-8">
 
@@ -1248,7 +1248,7 @@ normalizedScore = Math.log1p(score/k) / Math.log1p(xmax/k)
 
 <div v-click>
 
-## 📊 调整策略
+## 调整策略
 
 <div class="grid grid-cols-3 gap-4">
 
@@ -1290,7 +1290,7 @@ level: 2
 
 <div>
 
-## 🎯 召回配置
+## 召回配置
 
 <v-click>
 
@@ -1316,7 +1316,7 @@ sorterOrder: "first,OBB,SEM,PQ,VSL,PR"  // 排序优先级
 
 <div>
 
-## ⚖️ 业务权重调整
+## 业务权重调整
 
 <v-click>
 
@@ -1360,9 +1360,9 @@ level: 2
 
 <div v-click>
 
-## ⚡ 性能优化配置
+## 性能优化配置
 
-### 🚀 缓存策略
+### 缓存策略
 ```typescript
 searchCache: TTL 5分钟    // 搜索结果缓存
 sortCache: TTL 10分钟     // 排序结果缓存  
@@ -1378,7 +1378,7 @@ esCache: TTL 1分钟        // ES查询缓存
 
 <div v-click>
 
-## 🧪 A/B测试策略
+## A/B测试策略
 
 <div class="grid grid-cols-2 gap-6">
 
@@ -1422,7 +1422,7 @@ layout: center
 class: text-center
 ---
 
-# 🎓 培训总结
+# 培训总结
 
 ## 搜索技术核心要点回顾
 
@@ -1430,7 +1430,7 @@ class: text-center
 
 <div v-click>
 
-### 🏗️ **系统架构**
+### **系统架构**
 - 预处理 → 查询理解 → 召回 → 排序 → 返回
 - Elasticsearch + 应用层精排的两阶段架构
 - 多层缓存优化与性能监控
@@ -1439,7 +1439,7 @@ class: text-center
 
 <div v-click>
 
-### 📊 **评分体系**  
+### **评分体系**  
 - BM25基础评分 + 多维度增强评分
 - 语义增强、商品质量、品牌提升等组件
 - 对数归一化处理与权重平衡
@@ -1448,7 +1448,7 @@ class: text-center
 
 <div v-click>
 
-### ⚡ **召回排序**
+### **召回排序**
 - Function Score查询整合多脚本评分
 - SPU/SKU处理策略与属性聚合
 - 多级排序器与分组展示策略
@@ -1457,7 +1457,7 @@ class: text-center
 
 <div v-click>
 
-### 🔧 **参数调优**
+### **参数调优**
 - 权重配置、归一化参数、召回窗口
 - A/B测试验证与数据驱动优化  
 - 性能监控与缓存策略优化
@@ -1468,7 +1468,7 @@ class: text-center
 
 <div v-click class="mt-12">
 
-**💡 持续优化**: 理解业务 → 数据分析 → 假设验证 → 监控反馈
+**持续优化**: 理解业务 → 数据分析 → 假设验证 → 监控反馈
 
 </div>
 
@@ -1483,9 +1483,10 @@ class: text-center
 
 # 谢谢观看！
 
+## 搜索技术，让发现更简单
 
 <div class="pt-12">
-  <span class="text-6xl">🎯</span>
+  <span class="text-4xl">搜索技术核心</span>
 </div>
 
 **为不断提高企业运营效率而奋战 · 三横科技**
