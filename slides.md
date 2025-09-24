@@ -804,16 +804,25 @@ level: 1
 
 <div v-click class="mt-8 text-center">
 
-```mermaid {theme: 'neutral', scale: 0.7}
-graph TD
-A[用户查询] --> B[ES Function Score]
-B --> C[粗排召回 K×N 条结果]
-C --> D[应用层精排]
-D --> E[返回 N 条最终结果]
+<div class="relative inline-block">
+  <img 
+    src="./IMG_8191.png" 
+    alt="两阶段排序架构图" 
+    class="mx-auto max-h-80 cursor-pointer transition-transform duration-300 shadow-lg rounded-lg hover:shadow-xl"
+    title="鼠标悬停查看大图"
+  />
+  
+  <!-- 悬停时全屏显示的大图 -->
+  <div class="absolute inset-0 opacity-0 hover:opacity-100 hover:fixed hover:inset-0 hover:z-50 hover:bg-black hover:bg-opacity-90 hover:flex hover:items-center hover:justify-center transition-all duration-300 hover:p-4">
+    <img 
+      src="./IMG_8191.png" 
+      alt="两阶段排序架构图 - 大图"
+      class="w-full h-full object-contain rounded-lg shadow-2xl"
+    />
+  </div>
+</div>
 
-style A fill:#e1f5fe
-style E fill:#e8f5e8
-```
+<p class="text-sm text-gray-500 mt-2">鼠标悬停图片可全屏查看</p>
 
 </div>
 
