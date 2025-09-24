@@ -516,7 +516,7 @@ level: 2
 
 # 2.2 语义增强评分 (SemanticEnhancement)
 
-<div class="space-y-6">
+<div class="space-y-8">
 
 <div v-click>
 
@@ -534,7 +534,6 @@ spec_weight: 1.0       // 规格匹配权重 - 基础优先级
 
 ## 🧮 计算公式
 
-**计算公式**：
 ```javascript
 total = brand_score * brand_weight + 
         catF_score * category_weight + 
@@ -543,33 +542,12 @@ total = brand_score * brand_weight +
 
 </div>
 
-<div v-click>
+<div v-click class="text-center mt-8">
 
-## 💡 实际应用示例
+### 🎯 核心思想
+**通过实体匹配为搜索结果提供语义相关性评分**
 
-<div class="grid grid-cols-3 gap-4">
-
-**品牌匹配**
-```
-查询: "苹果手机"
-品牌: "苹果" ✓
-得分: 2.0 × 1.0 = 2.0
-```
-
-**类目匹配**  
-```
-查询: "苹果手机"
-类目: "手机" ✓
-得分: 1.5 × 1.0 = 1.5
-```
-
-**组合得分**
-```
-语义增强总分:
-2.0 + 1.5 = 3.5
-```
-
-</div>
+不同类型的匹配具有不同的权重，品牌匹配获得最高权重
 
 </div>
 
@@ -578,6 +556,73 @@ total = brand_score * brand_weight +
 <!--
 语义增强评分通过实体匹配提升搜索结果的相关性
 -->
+
+---
+level: 2
+---
+
+# 2.2 语义增强评分 - 实际应用示例
+
+<div class="space-y-6">
+
+<div v-click>
+
+## 💡 计算示例：查询"苹果手机"
+
+<div class="grid grid-cols-2 gap-8">
+
+<div>
+
+### 匹配结果
+```typescript
+查询分析结果:
+{
+  brand: "苹果",     // 品牌识别成功
+  category: "手机"   // 类目识别成功  
+}
+```
+
+### 评分计算
+```typescript
+brand_score = 1.0    // 完全匹配
+catF_score = 1.0     // 前置类目匹配
+catR_score = 0.0     // 无后置类目
+
+total = 1.0×2.0 + 1.0×1.5 + 0.0×1.5 = 3.5
+```
+
+</div>
+
+<div>
+
+### 应用场景对比
+
+**高匹配商品 (得分3.5)**
+- iPhone 15 Pro Max
+- 苹果iPhone 14系列  
+- Apple手机配件
+
+**低匹配商品 (得分1.5)**
+- 华为手机 (仅类目匹配)
+- 小米手机 (仅类目匹配)
+
+**无匹配商品 (得分0)**  
+- 苹果电脑 (品牌匹配但类目不符)
+- 三星平板 (品牌类目均不匹配)
+
+</div>
+
+</div>
+
+</div>
+
+<div v-click class="mt-8 text-center p-4 bg-blue-50 rounded-lg">
+
+🎯 **语义增强效果**: 相关商品获得更高评分，提升搜索精准度
+
+</div>
+
+</div>
 
 ---
 level: 2
@@ -1309,39 +1354,25 @@ WHERE categoryId = 'target_category';
 level: 2
 ---
 
-# 4.4 性能优化与测试策略
+# 4.4 性能优化与效果调整策略
 
-<div class="space-y-4">
+<div class="space-y-8">
 
 <div v-click>
 
 ## ⚡ 性能优化配置
 
-<div class="grid grid-cols-3 gap-3">
-
-**缓存设置**
+### 🚀 缓存策略
 ```typescript
-searchCache: TTL 5分钟
-sortCache: TTL 10分钟  
-esCache: TTL 1分钟
+searchCache: TTL 5分钟    // 搜索结果缓存
+sortCache: TTL 10分钟     // 排序结果缓存  
+esCache: TTL 1分钟        // ES查询缓存
 ```
 
-**分页优化**
-```typescript
-if (page > 100) {
-  useScrollSearch = true;
-  scrollTTL = "5m";
-}
-```
-
-**监控告警**
-```typescript
-responseTime > 500ms
-errorRate > 1%
-qps > 1000
-```
-
-</div>
+**缓存作用**：
+- 减少ES查询压力，提升响应速度
+- 降低系统负载，提高并发处理能力
+- 缓解热点查询对系统的冲击
 
 </div>
 
@@ -1349,22 +1380,32 @@ qps > 1000
 
 ## 🧪 A/B测试策略
 
-<div class="grid grid-cols-2 gap-4">
+<div class="grid grid-cols-2 gap-6">
 
-**权重对比测试**
+<div>
+
+### 权重对比测试
 ```typescript
 // 测试组配置
 const testConfig = {
-  semanticWeight: 3.0,  // vs 基线5.0
-  brandBoostWeight: 2.0, // vs 基线1.0
-  qualityWeight: 0.5     // vs 基线1.0
+  semanticWeight: 3.0,     // vs 基线5.0
+  brandBoostWeight: 2.0,   // vs 基线1.0  
+  qualityWeight: 0.5       // vs 基线1.0
 };
 ```
 
-**排序策略测试**  
-- 策略A: `"first,SEM,OBB,PQ"` (语义优先)
-- 策略B: `"first,PQ,OBB,SEM"` (销量优先)
-- 策略C: `"first,OBB,SEM,PQ"` (品牌优先)
+</div>
+
+<div>
+
+### 排序策略对比
+- **策略A**: `"first,SEM,OBB,PQ"` (语义优先)
+- **策略B**: `"first,PQ,OBB,SEM"` (销量优先)  
+- **策略C**: `"first,OBB,SEM,PQ"` (品牌优先)
+
+**测试指标**: 点击率、转化率、用户满意度
+
+</div>
 
 </div>
 
@@ -1381,7 +1422,7 @@ layout: center
 class: text-center
 ---
 
-# 🎓 课程总结
+# 🎓 培训总结
 
 ## 搜索技术核心要点回顾
 
