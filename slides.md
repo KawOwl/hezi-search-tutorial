@@ -1356,7 +1356,7 @@ level: 2
 
 # 4.4 性能优化与效果调整策略
 
-<div class="space-y-8">
+<div class="space-y-4">
 
 <div v-click>
 
@@ -1483,13 +1483,12 @@ class: text-center
 
 # 谢谢观看！
 
-## 🔍 搜索技术，让发现更简单
 
 <div class="pt-12">
   <span class="text-6xl">🎯</span>
 </div>
 
-**技术让商业更美好 · 三横科技**
+**为不断提高企业运营效率而奋战 · 三横科技**
 
 <!--
 感谢大家的参与，希望这次分享对理解搜索技术有所帮助
