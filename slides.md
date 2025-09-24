@@ -5,12 +5,12 @@ theme: seriph
 # like them? see https://unsplash.com/collections/94734566/slidev
 background: https://cover.sli.dev
 # some information about your slides (markdown enabled)
-title: 搜索技术培训
+title: 搜索中台技术培训
 info: |
   ## 搜索技术培训材料
   深入了解搜索系统的架构、评分体系、召回排序和参数调优
 
-  盒子科技 · 技术培训
+  三横科技 · 技术培训
 # apply UnoCSS classes to the current slide
 class: text-center
 # https://sli.dev/features/drawing
@@ -20,15 +20,19 @@ drawings:
 transition: slide-left
 # enable MDC Syntax: https://sli.dev/features/mdc
 mdc: true
+# 添加自定义样式
+css: unocss
 ---
 
-# 搜索技术培训
+<style src="./style.css"></style>
+
+# 搜索中台技术培训
 
 深入理解搜索系统的技术架构与优化策略
 
 <div class="pt-12">
   <span @click="$slidev.nav.next" class="px-2 py-1 rounded cursor-pointer" hover:bg="white op-10">
-    开始学习 <carbon:arrow-right class="inline"/>
+    开始 <carbon:arrow-right class="inline"/>
   </span>
 </div>
 
@@ -50,7 +54,7 @@ transition: fade-out
 layout: default
 ---
 
-# 课程目录
+# 培训目录
 
 <Toc columns="1" maxDepth="1"></Toc>
 
@@ -119,7 +123,7 @@ level: 2
 
 # 1.1 预处理阶段
 
-<div class="grid grid-cols-2 gap-8">
+<div class="grid grid-cols-2 gap-6">
 
 <div>
 
@@ -127,9 +131,9 @@ level: 2
 
 <v-clicks>
 
-- **输入过滤**: 去除禁用词、特殊字符、拼音识别
-- **分词处理**: 使用动态词典进行分词，支持新词自动识别  
-- **查询规范化**: 去除括号内容、标准化输入格式
+- **输入过滤**: 去除禁用词、特殊字符
+- **分词处理**: 动态词典分词、新词识别
+- **查询规范化**: 去除括号、标准化格式
 
 </v-clicks>
 
@@ -143,8 +147,7 @@ level: 2
 
 **输入过滤**
 ```
-"apple苹果手机！！！" 
-→ "apple苹果手机"
+"apple苹果手机！！！" → "apple苹果手机"
 ```
 
 </v-click>
@@ -153,8 +156,7 @@ level: 2
 
 **分词处理**
 ```
-"苹果手机" 
-→ ["苹果", "手机"]
+"苹果手机" → ["苹果", "手机"]
 ```
 
 </v-click>
@@ -163,8 +165,7 @@ level: 2
 
 **查询规范化**
 ```
-"iPhone 15（Pro Max版本）" 
-→ "iPhone 15"
+"iPhone 15（Pro Max版本）" → "iPhone 15"
 ```
 
 </v-click>
@@ -258,7 +259,7 @@ level: 2
 <v-clicks>
 
 - **实体关系评分**: 品牌、类目匹配度
-- **用户偏好评分**: 个人历史行为
+- **用户偏好评分**: 个人历史行为  
 - **平台热度评分**: 商品受欢迎程度
 
 </v-clicks>
@@ -267,9 +268,7 @@ level: 2
 
 **计算示例**：
 ```typescript
-"苹果手机" → 
-品牌权重: 2.0 × 类目权重: 1.5 
-= 联合评分: 3.5
+"苹果手机" → 品牌权重: 2.0 × 类目权重: 1.5 = 3.5
 ```
 
 </v-click>
@@ -284,10 +283,8 @@ level: 2
 
 **BM25算法** + **业务权重**
 ```typescript
-final_score = BM25: 12.5 
-            + 语义增强: 3.2 
-            + 质量评分: 1.8 
-            = 总分: 17.5
+final_score = BM25: 12.5 + 语义增强: 3.2 
+            + 质量评分: 1.8 = 17.5
 ```
 
 </v-click>
@@ -296,8 +293,7 @@ final_score = BM25: 12.5
 
 **得分归一化**
 ```typescript
-销量: 10000件 
-→ 归一化: 0.85分 (0-1区间)
+销量: 10000件 → 归一化: 0.85分
 Math.log1p(score/k) / Math.log1p(xmax/k)
 ```
 
@@ -784,14 +780,14 @@ level: 2
 
 # 3.1 粗排阶段 - Function Score查询
 
-<div class="space-y-6">
+<div class="space-y-4">
 
 <div v-click>
 
 ## 🔧 Function Score查询结构
 
 ````md magic-move {lines: true}
-```typescript {*|3|5-11|12-13}
+```typescript {*|3|5-8|9-10}
 {
   function_score: {
     query: { /* BM25基础查询 */ },
@@ -799,16 +795,15 @@ level: 2
       { script_score: { script: semanticEnhancementScript } },
       { script_score: { script: originalBrandBoostScript } },
       { script_score: { script: productQualityScoreScript } },
-      { script_score: { script: titleBM25NormalizerScript } },
-      { script_score: { script: businessWeightScript } }
+      { script_score: { script: titleBM25NormalizerScript } }
     ],
-    score_mode: "sum",     // 评分合并方式：相加
+    score_mode: "sum",     // 评分合并：相加
     boost_mode: "replace"  // 替换原始BM25评分
   }
 }
 ```
 
-```typescript {*|2-3|4-5}
+```typescript {*|2|3}
 // 粗排召回策略配置
 {
   from: (page-1) * size * K,    // 召回窗口起始位置
@@ -843,7 +838,7 @@ level: 2
 
 # 3.2 SPU/SKU处理策略
 
-<div class="grid grid-cols-2 gap-8">
+<div class="grid grid-cols-2 gap-6">
 
 <div>
 
@@ -856,10 +851,7 @@ level: 2
 ```typescript
 collapse: {
   field: "spuId",
-  inner_hits: {
-    name: "variants",
-    size: 3
-  }
+  inner_hits: { name: "variants", size: 3 }
 }
 ```
 
@@ -901,8 +893,7 @@ aggs: {
   spuId: "iphone15",
   variants: [
     { skuId: "iphone15-128g-blue" },
-    { skuId: "iphone15-256g-red" },
-    { skuId: "iphone15-512g-black" }
+    { skuId: "iphone15-256g-red" }
   ]
 }
 ```
@@ -916,8 +907,7 @@ aggs: {
 ```typescript
 aggs: {
   brands: { terms: { field: "brandName" } },
-  categories: { terms: { field: "categoryName" } },
-  priceRanges: { range: { field: "price" } }
+  categories: { terms: { field: "categoryName" } }
 }
 ```
 
@@ -1111,7 +1101,7 @@ level: 2
 
 # 4.1 权重配置调整
 
-<div class="grid grid-cols-2 gap-8">
+<div class="grid grid-cols-2 gap-6">
 
 <div>
 
@@ -1120,9 +1110,9 @@ level: 2
 <v-click>
 
 ```typescript
-semanticEnhancementScriptBrandWeight: 2.0    // 品牌匹配权重
-semanticEnhancementScriptCategoryWeight: 1.5 // 类目匹配权重  
-semanticEnhancementScriptResultWeight: 5.0   // 语义增强总权重
+brandWeight: 2.0        // 品牌匹配权重
+categoryWeight: 1.5     // 类目匹配权重  
+resultWeight: 5.0       // 语义增强总权重
 ```
 
 </v-click>
@@ -1130,9 +1120,9 @@ semanticEnhancementScriptResultWeight: 5.0   // 语义增强总权重
 <v-click>
 
 **调整建议**:
-- 品牌导向平台: 提高`brandWeight`到3.0
-- 类目丰富平台: 提高`categoryWeight`到2.0  
-- 降低语义干扰: 减少`resultWeight`到3.0
+- 品牌导向: 提高`brandWeight`到3.0
+- 类目丰富: 提高`categoryWeight`到2.0  
+- 降低干扰: 减少`resultWeight`到3.0
 
 </v-click>
 
@@ -1145,11 +1135,9 @@ semanticEnhancementScriptResultWeight: 5.0   // 语义增强总权重
 <v-click>
 
 ```typescript
-titleBM25NormalizerScriptResultWeight: 5.0     // 标题BM25权重
-originalBrandBoostScriptResultWeight: 1.0      // 品牌店铺权重
-productQualityScoreScriptResultWeight: 1.0     // 商品质量权重
-productQualityCoefficient: 1.0                 // 质量系数
-categoryCoefficient: 1.0                       // 类目系数
+titleBM25Weight: 5.0             // 标题BM25权重
+originalBrandBoostWeight: 1.0    // 品牌店铺权重
+productQualityWeight: 1.0        // 商品质量权重
 ```
 
 </v-click>
@@ -1250,7 +1238,7 @@ level: 2
 
 # 4.3 召回配置与业务权重
 
-<div class="grid grid-cols-2 gap-8">
+<div class="grid grid-cols-2 gap-6">
 
 <div>
 
@@ -1260,7 +1248,7 @@ level: 2
 
 ```typescript
 esRecallSize: 300                        // ES召回窗口大小
-cardinalityPrecisionThreshold: 40000     // 基数统计精度阈值
+cardinalityThreshold: 40000              // 基数统计精度阈值
 sorterOrder: "first,OBB,SEM,PQ,VSL,PR"  // 排序优先级
 ```
 
@@ -1269,8 +1257,8 @@ sorterOrder: "first,OBB,SEM,PQ,VSL,PR"  // 排序优先级
 <v-click>
 
 **调整指南**:
-- 小流量平台: `esRecallSize: 150` 减少开销
-- 大流量平台: `esRecallSize: 500` 提高精度
+- 小流量: `esRecallSize: 150` 减少开销
+- 大流量: `esRecallSize: 500` 提高精度
 - 品牌优先: `"first,OBB,PQ,SEM,VSL,PR"`
 - 销量优先: `"first,PQ,OBB,SEM,VSL,PR"`
 
@@ -1293,10 +1281,6 @@ WHERE brandId = 'target_brand';
 -- 类目权重调整  
 UPDATE CategoryFront SET testValue = 1.5 
 WHERE categoryId = 'target_category';
-
--- 商品权重调整
-UPDATE Product SET testWeight_product = 1.8 
-WHERE productId = 'target_product';
 ```
 
 </v-click>
@@ -1324,19 +1308,19 @@ level: 2
 
 # 4.4 性能优化与测试策略
 
-<div class="space-y-6">
+<div class="space-y-4">
 
 <div v-click>
 
 ## ⚡ 性能优化配置
 
-<div class="grid grid-cols-3 gap-4">
+<div class="grid grid-cols-3 gap-3">
 
 **缓存设置**
 ```typescript
-searchCache: TTL 5分钟    // 搜索结果缓存
-sortCache: TTL 10分钟     // 排序结果缓存  
-esCache: TTL 1分钟        // ES查询缓存
+searchCache: TTL 5分钟
+sortCache: TTL 10分钟  
+esCache: TTL 1分钟
 ```
 
 **分页优化**
@@ -1349,9 +1333,9 @@ if (page > 100) {
 
 **监控告警**
 ```typescript
-responseTime > 500ms      // 响应时间告警
-errorRate > 1%            // 错误率告警
-qps > 1000               // 查询量告警
+responseTime > 500ms
+errorRate > 1%
+qps > 1000
 ```
 
 </div>
@@ -1362,22 +1346,22 @@ qps > 1000               // 查询量告警
 
 ## 🧪 A/B测试策略
 
-<div class="grid grid-cols-2 gap-6">
+<div class="grid grid-cols-2 gap-4">
 
 **权重对比测试**
 ```typescript
 // 测试组配置
 const testConfig = {
-  semanticEnhancementWeight: 3.0,  // vs 基线5.0
-  brandBoostWeight: 2.0,           // vs 基线1.0
-  qualityWeight: 0.5               // vs 基线1.0
+  semanticWeight: 3.0,  // vs 基线5.0
+  brandBoostWeight: 2.0, // vs 基线1.0
+  qualityWeight: 0.5     // vs 基线1.0
 };
 ```
 
 **排序策略测试**  
-- 策略A: `"first,SEM,OBB,PQ,VSL,PR"` (语义优先)
-- 策略B: `"first,PQ,OBB,SEM,VSL,PR"` (销量优先)
-- 策略C: `"first,OBB,SEM,PQ,VSL,PR"` (品牌优先)
+- 策略A: `"first,SEM,OBB,PQ"` (语义优先)
+- 策略B: `"first,PQ,OBB,SEM"` (销量优先)
+- 策略C: `"first,OBB,SEM,PQ"` (品牌优先)
 
 </div>
 
@@ -1461,7 +1445,7 @@ class: text-center
   <span class="text-6xl">🎯</span>
 </div>
 
-**技术让商业更美好 · 盒子科技**
+**技术让商业更美好 · 三横科技**
 
 <!--
 感谢大家的参与，希望这次分享对理解搜索技术有所帮助
