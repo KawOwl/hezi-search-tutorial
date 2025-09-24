@@ -827,14 +827,13 @@ level: 2
 
 # 3.1 粗排阶段 - Function Score查询
 
-<div class="space-y-4">
+<div class="space-y-6">
 
 <div v-click>
 
 ## Function Score查询结构
 
-````md magic-move {lines: true}
-```typescript {*|3|5-8|9-10}
+```typescript
 {
   function_score: {
     query: { /* BM25基础查询 */ },
@@ -850,15 +849,19 @@ level: 2
 }
 ```
 
+</div>
+
+<div v-click>
+
+## 动态缓存扩展策略
+
 ```typescript
-// 动态缓存扩展策略
 {
   expandSize: "max(需求数量 - 当前缓存, 0)",
-  maxLimit: "单次查询不超过10000条",
+  maxLimit: "单次查询不超过10000条", 
   paginationEnd: "max(from + size, esRecallSize)"
 }
 ```
-````
 
 </div>
 
