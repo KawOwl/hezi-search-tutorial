@@ -1486,10 +1486,8 @@ class: text-center
 
 # 谢谢观看！
 
-## 搜索技术，让发现更简单
-
 <div class="pt-12">
-  <span class="text-4xl">搜索技术核心</span>
+  <span class="text-4xl">搜索中台技术培训</span>
 </div>
 
 **为不断提高企业运营效率而奋战 · 三横科技**
