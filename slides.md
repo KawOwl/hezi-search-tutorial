@@ -162,11 +162,11 @@ level: 2
 </v-click>
 
 <v-click>
-
+<!-- 
 **查询规范化**
 ```
 "iPhone 15（Pro Max版本）" → "iPhone 15"
-```
+``` -->
 
 </v-click>
 
