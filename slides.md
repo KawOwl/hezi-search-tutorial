@@ -1069,7 +1069,7 @@ function sorter(sortType, products, sorterOrder) {
 
 <v-click>
 
-**货架式排序**: 先按品牌分组，组内按质量排序
+**货架式排序**: 先分组，组内按排序器配置排序
 
 ```typescript
 function divideGroup(list, compareFn, groupSize) {
